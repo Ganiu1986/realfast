@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0;400;0;500;0;700;1,100;1,300;1,400;1,500;1,700&display=swap');
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Roboto',sans-serif;
+}
+
+header{
+    width: 1370px;
+    height: 80px;
+    background-color: black;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+   
+    
+}
+.dayo{
+    text-decoration: none;
+    color: white;
+    font-size: 35px;
+    margin-left:50px;
+    
+}
+.dayo:hover{
+    color:red;
+    transition: 0.5 ease;
+}
+ul li{
+    display:inline-block;
+    margin-right: 30px;
+    list-style: none;
+}
+ul li a{
+    text-decoration: none;
+    color:white;
+    font-size: 20px;
+    
+}
+ul li a:hover{
+    color:red;
+    transition: 0.5 ease-in-out;
+
+}
+.button{
+    text-decoration: none;
+    color:white;
+    margin-right: 40px;
+    font-size: 20px;
+    border:1px solid white;
+    background:transparent;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.button:hover{
+    border: 1px solid red;
+    transition: 0.5 ease;
+    
+}
+
+.hero{
+    position: absolute;
+}
+
+main{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    background-color:white;
+    margin-top: 100px;
+    margin-left: 70px;
+    border-radius: 20px;
+    position: relative;
+}
+
+.bola{
+    padding-right: 30px;
+    font-size: 60px;
+    margin-left: 30px;
+    margin-top: 50px;
+    color: red;
+}
+.lami{
+    padding-right: 20px;
+    font-size: 30px;
+    font-family: 'Roboto',sans-serif;
+    line-height: 60px;
+    margin-left: 30px;
+    margin-top: 50px;
+    color: black;
+
+}
+.tunde{
+    padding-left: 45px;
+}
+div{
+    position: relative;
+    display: flex;
+    gap: 60px;
+    line-height: 30px;
+    margin-left: 120px;
+    margin-top: 50px;
+    margin-bottom: 10px;
+    color: white;
+    
+}
+.kamo{
+    position: absolute;
+    color: black;
+    line-height: 30px;
+    font-weight: bold;
+}
+.ramo{
+    position: relative;
+    color: black;
+    padding-top: 20px;
+    line-height: 30px;
+    font-weight: bold;
+}
+.eric{
+    position: relative;
+    margin-left: 100px;
+    margin-top: 70px;
+    color: white;
+    
+}
+.bose{
+    position: relative;
+    margin-left: 450px;
+    margin-top: 20px;
+    
+    
+}
+span{
+    color:red;
+}
+
+
