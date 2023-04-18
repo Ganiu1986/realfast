@@ -48,5 +48,5 @@ const footerStyles = {
     socialBlock:'flex flex-row items-center gap-1 md:gap-3',
     icon:'w-6 h-6 md:w-10 md:h-10 text-indigo-200',
     legalBlock:'flex flex-row items-center gap-3',
-    legalText:'text-indigo-400 text-xs md:text-sm'
+    legalText:'text-indigo-400 text-xs md:text-sm',
 }
