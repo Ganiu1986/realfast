@@ -3,7 +3,7 @@ import Link from "next/link";
 import Head from "next/head";
 import Image from "next/image";
 
-export default function PagNotFound () {
+export default function PageNotFound () {
     const [screenHeight,setScreenHeight] = useState(0);
 
     useEffect(() => {

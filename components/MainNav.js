@@ -3,23 +3,28 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { HiOutlineMenu } from 'react-icons/hi';
 import { AiOutlineClose,AiOutlineArrowRight } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 
 export default function MainNav() {
     const [showMobileNav,setShowMobileNav] = useState(false);
 
+    const router = useRouter();
+
     return (
         <div>
-            <nav className={navbarStyles.navBar} id='mainNav'>
+            <nav className={navbarStyles.navBar} id='mainNav' style={{
+                backgroundColor:router.asPath.split('/').includes('talents') ? '#ddd6fe' : null,
+            }}>
             <ul className={navbarStyles.navSection}>
                 <li className={navbarStyles.responsiveMenuItems}>
-                <Link href='/' className={navbarStyles.brandName}>Real Fast</Link>
+                    <Link href='/' className={navbarStyles.brandName}>Real Fast</Link>
                 </li>
                 <li>
-                <Image width={30} height={38} src='/realfast_logo.png' alt='real fast logo'/>
+                    <Image width={30} height={38} src='/realfast_logo.png' alt='real fast logo'/>
                 </li>
 
                 <li className={navbarStyles.responsiveMenuItems}>
-                <Link href='#' className={navbarStyles.navText}>Find Jobs</Link>
+                    <Link href='#' className={navbarStyles.navText}>Find Jobs</Link>
                 </li>
             </ul>
 
@@ -49,30 +54,46 @@ export default function MainNav() {
             <div className={navbarStyles.halfScreenMenuBlock}>
                 <ul className={navbarStyles.mobileMenuItems}>
                 <li className={navbarStyles.mobileMenuItem}>
-                    <Link href='#' className={navbarStyles.mobileMenuText}>Home</Link>
+                    <Link 
+                    href='/' className={navbarStyles.mobileMenuText}
+                    onClick={() => setShowMobileNav(false)}>Home</Link>
                 </li>
                 <li className={navbarStyles.mobileMenuItem}>
-                    <Link href='#' className={navbarStyles.mobileMenuText}>Find Jobs</Link>
+                    <Link 
+                    href='#' className={navbarStyles.mobileMenuText}
+                    onClick={() => setShowMobileNav(false)}>Find Jobs</Link>
                 </li>
                 <li className={navbarStyles.mobileMenuItem}>
-                    <Link href='#' className={navbarStyles.mobileMenuText}>Pricing</Link>
+                    <Link 
+                    href='#' className={navbarStyles.mobileMenuText}
+                    onClick={() => setShowMobileNav(false)}>Pricing</Link>
                 </li>
                 <li className={navbarStyles.mobileMenuItem}>
-                    <Link href='#' className={navbarStyles.mobileMenuText}>Support</Link>
+                    <Link 
+                    href='#' className={navbarStyles.mobileMenuText}
+                    onClick={() => setShowMobileNav(false)}>Support</Link>
                 </li>
                 <li className={navbarStyles.mobileMenuItem}>
-                    <Link href='#' className={navbarStyles.mobileMenuText}>Contact us</Link>
+                    <Link 
+                    href='#' className={navbarStyles.mobileMenuText}
+                    onClick={() => setShowMobileNav(false)}>Contact us</Link>
                 </li>
                 </ul>
 
                 <div className={navbarStyles.mobileBottomItems}>
-                <Link href='#' className={navbarStyles.signinBtn}>
-                    <span className={navbarStyles.btnItems}>Sign in</span>
-                    <AiOutlineArrowRight className={navbarStyles.btnItems}/></Link>
-                <Link href='#' className={navbarStyles.createAcctBtn}>
-                    <span>Create account</span>
-                    <AiOutlineArrowRight />
-                </Link>
+                    <Link href='#' className={navbarStyles.authBtn} onClick={() => setShowMobileNav(false)}>
+                        <span className={navbarStyles.btnItems}>Sign in</span>
+                        <AiOutlineArrowRight className={navbarStyles.btnItems}/>
+                    </Link>
+
+                    <Link 
+                    href='#' 
+                    className={navbarStyles.authBtn} 
+                    onClick={() => setShowMobileNav(false)}
+                    style={{backgroundColor:'#3730a3',color:'#fff'}}>
+                        <span className={navbarStyles.btnItems}>Create account</span>
+                        <AiOutlineArrowRight />
+                    </Link>
                 </div>
             </div>
         </nav>
@@ -93,8 +114,8 @@ const navbarStyles = {
     mobileMenuItems:'flex flex-col gap-3 pt-[60px] pr-4',
     mobileMenuItem:'text-end',
     mobileMenuText:'text-[20px] font-reading text-gray-400',
-    mobileBottomItems:'px-3',
-    signinBtn:'block w-full h-[58px] flex flex-row justify-between items-center px-3 bg-pink-400 rounded-md',
+    mobileBottomItems:'flex flex-col gap-2 px-3 pb-3',
+    authBtn:'block w-full h-[58px] flex flex-row justify-between items-center px-3 bg-pink-400 rounded-md',
     btnItems:'text-xl',
     createAcctBtn:''
   }

@@ -9,7 +9,7 @@ export default function AboutUs () {
     // setTimeout (() => {
     //     return router.push('/search')
     // },3000)
-    console.log(router.query.keyword);
+    // console.log(router.query.keyword);
 
     //run something after page has been render
     useEffect(() => {

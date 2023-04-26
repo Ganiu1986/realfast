@@ -1,10 +1,13 @@
+
 import Head from 'next/head';
-import {useState,useEffect} from 'react'
+import {useState,useEffect,useContext} from 'react'
+import { AppContext } from '@/settings/context/appcontext';
 import {GiMagnifyingGlass} from 'react-icons/gi';
 
 export default function Home() {
   // console.log(window.innerHeight)
   const [screenHeight,setScreenHeight] = useState(0);
+  const {uid,setUid,email,setEmail} = useContext(AppContext);
 
   useEffect(() => {
     setScreenHeight(window.innerHeight - 60);
@@ -47,8 +50,7 @@ searchPanel:'w-full flex flex-row gap-1',
 search:'w-full border border-indigo-200 rounded-full py-5 px-3',
 searchBtn:'h-[52px] flex justify-center items-center bg-indigo-800 text-white  px-3 py-5 rounded-full cursor-pointer',
 message:'text-center mt-2',
-otherActions:'flex flex-row gap-4 justify',
-quickFinder:'md:w-[200px] md:h-[120px] bg-indigo-800 shadow-xl border-4 border-indigo-600 rounded-xl text-lg text-indigo-200'
-
+otherActions:'w-full flex flex-col md:flex-row justify-center items-center gap-4 md:justify-between ',
+quickFinder:'md:flex md:w-[200px] md:h-[120px] w-[200px] h-[120px] justify-center items-center bg-indigo-800 shadow-xl border-indigo-600 rounded-xl text-lg text-indigo-200',
 
 }
