@@ -1,14 +1,23 @@
-import { useState } from 'react';
+import { useState, } from 'react';
+// import { AppContext } from '@/settings/context/appContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import { HiOutlineMenu } from 'react-icons/hi';
 import { AiOutlineClose,AiOutlineArrowRight } from 'react-icons/ai';
 import { useRouter } from 'next/router';
+// import { signOut } from 'firebase/auth';
+import { auth } from '@/settings/firebase/firebase.setup';
+import { useSession,signOut } from 'next-auth/react';
 
 export default function MainNav() {
     const [showMobileNav,setShowMobileNav] = useState(false);
+    const {data:session} = useSession
 
     const router = useRouter();
+
+    const handleFirebaseSignout = () => {
+        
+    }
 
     return (
         <div>
@@ -31,7 +40,11 @@ export default function MainNav() {
             <ul className={navbarStyles.navSection}>
                 <li className={navbarStyles.responsiveMenuItems} 
                 style={{borderRight:'2px solid gray',paddingRight:8}}>
-                <Link href='#' className={navbarStyles.navText}>Sign in</Link>
+                {
+                    session
+                    ? <p className={navbarStyles.navText} onClick={() => signOut()}>Sign out</p>
+                    :<Link href='/signin' className={navbarStyles.navText}>Sign in</Link>
+                }
                 </li>
                 <li className={navbarStyles.responsiveMenuItems}>
                 <Link href='#' className={navbarStyles.navText}>Post a job</Link>
@@ -80,21 +93,41 @@ export default function MainNav() {
                 </li>
                 </ul>
 
-                <div className={navbarStyles.mobileBottomItems}>
-                    <Link href='#' className={navbarStyles.authBtn} onClick={() => setShowMobileNav(false)}>
-                        <span className={navbarStyles.btnItems}>Sign in</span>
-                        <AiOutlineArrowRight className={navbarStyles.btnItems}/>
-                    </Link>
+                
+                    {
+                        !session 
+                        ? (
+                            <div className={navbarStyles.mobileBottomItems}>
+                                <Link href='/signin' className={navbarStyles.authBtn} onClick={() => setShowMobileNav(false)}>
+                                    <span className={navbarStyles.btnItems}>Sign in</span>
+                                    <AiOutlineArrowRight className={navbarStyles.btnItems}/>
+                                </Link>
 
-                    <Link 
-                    href='#' 
-                    className={navbarStyles.authBtn} 
-                    onClick={() => setShowMobileNav(false)}
-                    style={{backgroundColor:'#3730a3',color:'#fff'}}>
-                        <span className={navbarStyles.btnItems}>Create account</span>
-                        <AiOutlineArrowRight />
-                    </Link>
-                </div>
+                                <Link 
+                                href='/signup' 
+                                className={navbarStyles.authBtn} 
+                                onClick={() => setShowMobileNav(false)}
+                                style={{backgroundColor:'#3730a3',color:'#fff'}}>
+                                    <span className={navbarStyles.btnItems}>Create account</span>
+                                    <AiOutlineArrowRight />
+                                </Link>
+                            </div>
+                        ) 
+                        : (
+                            <div className={navbarStyles.mobileBottomItems}>
+                                <button 
+                                className={navbarStyles.authBtn} 
+                                onClick={() => {
+                                    setShowMobileNav(false);
+                                    handleFirebaseSignout();
+                                }}>
+                                    <span className={navbarStyles.btnItems}>Sign out</span>
+                                    <AiOutlineArrowRight className={navbarStyles.btnItems}/>
+                                </button>
+                            </div>
+                        )
+                    }
+                
             </div>
         </nav>
         </div>
