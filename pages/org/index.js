@@ -1,6 +1,5 @@
-import { useState,useEffect,useContext } from "react";
+import { useState,useEffect} from "react";
 import Head from "next/head";
-import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "../api/auth/[...nextauth]";
 
@@ -28,7 +27,7 @@ export default function Dashboard () {
         </Head>
         <main className={styles.container} style={{minHeight:`${screenHeight}px`}}>
             <div className={styles.wrapper}>
-                <h2 className={styles.title}>You are signed in as { session?.user.email}</h2>
+                
 
                
             </div>
@@ -42,7 +41,7 @@ export  async function getServerSideProps (context) {
         
     //if there is an active session, redirect to talent dashboard
     if(session) {
-        if(session.user.accountType !== 'talent') {
+        if(session.user.accountType !== 'org') {
             return {
                 redirect:{
                     destination:'/',
@@ -65,10 +64,11 @@ export  async function getServerSideProps (context) {
         }
     }
 }
+    
+    
 
 const styles = {
     container:'w-full flex flex-col justify-center items-center px-16',
     wrapper:'w-full md:w-[720px] py-8',
     title:'text-xl text-center mb-4',
 }
-

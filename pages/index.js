@@ -1,19 +1,17 @@
 import Head from 'next/head';
-import { useState, useEffect, useContext } from 'react';
+import { useState,useEffect,useContext } from 'react';
 import { AppContext } from '@/settings/context/appContext';
-import { GiMagnifyingGlass } from 'react-icons/gi'
-
+import { GiMagnifyingGlass } from 'react-icons/gi';
+import Link from 'next/link';
 
 export default function Home() {
-   // console.log(window.innerHeight)
-  const [screenHeight, setScreenHeight] = useState(0);
-  const {uid,setUid,email,setEmail} = useContext(AppContext);
-  
+  const [screenHeight,setScreenHeight] = useState(0);
+  const { uid,setUid,email,setEmail } = useContext(AppContext);
 
-  useEffect(()=>{
+  useEffect(() => {
     setScreenHeight(window.innerHeight - 60);
   },[])
-
+  
   return (
     <>
       <Head>
@@ -26,20 +24,22 @@ export default function Home() {
         <div className={styles.wrapper}>
           <div className={styles.searchBlock}>
             <div className={styles.searchPanel}>
-              <input type="text" placeholder='eg. Human Resource Manager' className={styles.search} />
+              <input type='text' 
+              placeholder='eg. human resource manager' 
+              className={styles.search}/>
               <button className={styles.searchBtn}>
-                Search
-                <GiMagnifyingGlass/>
+                search
+                <GiMagnifyingGlass />
               </button>
             </div>
 
-            <p className={styles.message}>Your dream job is just a click away </p>
+            <p className={styles.message}>Your dream job is just a click away</p>
           </div>
 
           <div className={styles.otherActions}>
-            <button className={styles.quickFinder}>RECENT JOBS</button>
-            <button className={styles.quickFinder}>HIGH PAYING JOBS</button>
-            <button className={styles.quickFinder}>CLOSING SOON</button>
+            <Link href='/jobs' className={styles.quickFinder}>Recent jobs</Link>
+            <Link href='/jobs?by=salary' className={styles.quickFinder}>High paying jobs</Link>
+            <Link href='#' className={styles.quickFinder}>Closing soon</Link>
           </div>
         </div>
       </main>
@@ -56,5 +56,5 @@ const styles = {
   searchBtn:'flex justify-center items-center bg-indigo-800 text-white px-3 py-5 rounded-full cursor-pointer',
   message:'text-center mt-2',
   otherActions:'flex flex-col md:flex-row gap-4 md:justify-center',
-  quickFinder:'md:w-[200px] h-[60px] md:h-[120px] bg-indigo-800 rounded-xl text-lg text-indigo-200'
+  quickFinder:'block flex justify-center items-center md:w-[200px] h-[60px] md:h-[120px] bg-indigo-800 rounded-xl text-lg text-indigo-200'
 }

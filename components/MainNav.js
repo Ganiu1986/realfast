@@ -1,5 +1,4 @@
-import { useState, } from 'react';
-// import { AppContext } from '@/settings/context/appContext';
+import { useState,useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { HiOutlineMenu } from 'react-icons/hi';
@@ -11,7 +10,7 @@ import { useSession,signOut } from 'next-auth/react';
 
 export default function MainNav() {
     const [showMobileNav,setShowMobileNav] = useState(false);
-    const {data:session} = useSession
+    const {data:session} = useSession();
 
     const router = useRouter();
 
@@ -39,20 +38,20 @@ export default function MainNav() {
 
             <ul className={navbarStyles.navSection}>
                 <li className={navbarStyles.responsiveMenuItems} 
-                style={{borderRight:'2px solid gray',paddingRight:8}}>
-                {
-                    session
-                    ? <p className={navbarStyles.navText} onClick={() => signOut()}>Sign out</p>
-                    :<Link href='/signin' className={navbarStyles.navText}>Sign in</Link>
-                }
+                    style={{borderRight:'2px solid gray',paddingRight:8}}>
+                    {
+                        session
+                        ? <p className={navbarStyles.navText} onClick={()=> signOut()}>Sign Out</p>
+                        : <Link href='/signin' className={navbarStyles.navText}>Sign In</Link>
+                    }
                 </li>
                 <li className={navbarStyles.responsiveMenuItems}>
-                <Link href='#' className={navbarStyles.navText}>Post a job</Link>
+                    <Link href='/org/post-job' className={navbarStyles.navText}>Post a job</Link>
                 </li>
                 <li>
-                <HiOutlineMenu 
-                className={navbarStyles.menu}
-                onClick={() => setShowMobileNav(true)}/>
+                    <HiOutlineMenu 
+                    className={navbarStyles.menu}
+                    onClick={() => setShowMobileNav(true)}/>
                 </li>
             </ul>
             </nav>
@@ -121,7 +120,7 @@ export default function MainNav() {
                                     setShowMobileNav(false);
                                     handleFirebaseSignout();
                                 }}>
-                                    <span className={navbarStyles.btnItems}>Sign out</span>
+                                    <span className={navbarStyles.btnItems} >Sign out</span>
                                     <AiOutlineArrowRight className={navbarStyles.btnItems}/>
                                 </button>
                             </div>

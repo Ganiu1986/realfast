@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ImFacebook2 } from 'react-icons/im';
 import { AiFillInstagram,AiFillTwitterCircle,AiFillYoutube } from "react-icons/ai";
 
+
 export default function Footer () {
     const year = new Date().getFullYear();
 
