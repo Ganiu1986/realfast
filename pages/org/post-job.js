@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useFormik } from "formik";
 import * as yup from 'yup';
 import { db } from "@/settings/firebase/firebase.setup";
-import {collection,addDoc,doc,setDoc} from "firebase/firestore";
+import {collection,addDoc} from "firebase/firestore";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
 
