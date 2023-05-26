@@ -2,10 +2,12 @@ import {useState,useEffect} from "react"
 import Head from 'next/head'
 import { useFormik } from "formik";
 import * as yup from 'yup';
-import { db } from "@/settings/firebase/firebase.setup";
-import {collection,addDoc} from "firebase/firestore";
+import { db,storage } from "@/settings/firebase/firebase.setup";
+import {collection,addDoc,updateDoc,doc} from "firebase/firestore";
+import { ref,uploadString,getDownloadURL } from "firebase/storage";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
+
 
 //create a validation schema (validation rules)
 const fieldsSchema = yup.object().shape({
@@ -17,30 +19,52 @@ const fieldsSchema = yup.object().shape({
 
 export default function PostJob() {
     const [spinnerActivity,setSpinnerActivity] = useState(false);
+    const [selectedFile,setSelectedFile] = useState(null);
+
+    const addImageToPost = (e) => {
+        const reader = new FileReader();
+        if (e.target.files[0]) {
+            reader.readAsDataURL(e.target.files[0]);
+        }
+        reader.onload = readerEvent => {
+            setSelectedFile(readerEvent.target.result);
+        }
+    }
     
     const handleFirestoreWriteDocument = async () => {
-        setSpinnerActivity(true);//start activity indicator
-         await addDoc(collection(db,'job'),{
-                title:values.jobTitle,
-                desc:values.description,
-                requirements:values.requirements,
-                wages:values.wages,
-                timestamp:new Date().getTime(),
-                status:'active',
-                url:values.jobTitle.toLowerCase().split(' ').join('-'),
-           })
-           .then(()=>{
-            setSpinnerActivity(false);//stop activity indicator
-                console.log("posted amazingly");
-           })
-           
-           .catch(error=>{
-            setSpinnerActivity(false);//stop activity indicator
-            console.log(error)
+        setSpinnerActivity(true);// start activity indicator
+        const docRef = await addDoc(collection(db,'job',),{
+            title:values.jobTitle,
+            desc:values.description,
+            requirements:values.requirements,
+            wages:values.wages,
+            timestamp:new Date().getTime(),
+            status:'active',
+            url:values.jobTitle.replaceAll('/','').toLowerCase().split(' ').join('-'),
         })
-        
-           
-    }
+        //if document write was succesfull, upload image to storage
+        if(docRef.id) {
+            const imageRef = ref(storage,`job/${docRef.id}/image`);
+
+            if (selectedFile) {
+                await uploadString(imageRef,selectedFile,"data_url")
+                .then(async () => {
+                    const downloadURL = await getDownloadURL(imageRef);
+                    await updateDoc(doc(db,'job',docRef.id),{
+                        coverImage:downloadURL
+                    });
+                    console.log('Published successfuly');
+                });
+            } else {
+                console.log('Published successfuly');
+            }
+        }else {
+            console.log('Problem creating document');
+        }
+
+        // setSpinnerActivity(false);// stop activity indicator
+        // console.log("posted amazingly");
+}
 
 
   const { values,handleBlur,handleChange,errors,handleSubmit,touched } = useFormik({
@@ -49,7 +73,6 @@ export default function PostJob() {
             jobTitle:'',description:'',requirements:'',wages:''
         },
         onSubmit:(values) => {
-        
             handleFirestoreWriteDocument();
         } 
         
@@ -129,9 +152,20 @@ export default function PostJob() {
                         }
                     </div>
 
+                    <div className={styles.inputBlockMain}>
+                        <label className={styles.label}>Optional: Add a cover image optional</label>
+                       <input 
+                        className={styles.input}
+                        type="file"
+                        accept="image/*"
+                        id="filePicker"
+                        onChange={addImageToPost}
+                        />
+                    </div>
+
                     <button type="submit" className={styles.submitBtn}>
-                        
-                        {spinnerActivity ? <Spinner/>: 'SUBMIT'}</button>
+                        {spinnerActivity ? <Spinner/> : 'SUBMIT'}
+                    </button>
                 </form>
             </div>    
         </main>

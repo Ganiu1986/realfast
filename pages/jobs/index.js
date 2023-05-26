@@ -37,7 +37,7 @@ export default function Jobs ({jobsData}) {
         <main className={styles.container}>
             <h1 className="text-3xl mb-4">Recent jobs</h1>
 
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-cols gap-3">
                 {
                     jobsData.map(item => {
                         return (
